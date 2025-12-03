@@ -1,0 +1,77 @@
+`⌘``k`
+GitBook Assistant
+ProductResourcesGitHubStart free
+More
+  * Documentation
+  * Learn
+  * ZenML Pro
+  * Stacks
+  * API Reference
+  * SDK Reference
+  * Changelog
+
+
+GitBook Assistant
+GitBook Assistant
+Working...Thinking...
+GitBook Assistant
+##### Good afternoon
+I'm here to help you with the docs.
+What is this page about?What should I read next?Can you give an example?
+`⌘``i`
+AI Based on your context
+Send
+  * Getting Started
+    *     *     *     *     *     *   * Deploying ZenML
+    *     *       * with your User (interactive)
+      * with your User (programmatic)
+      * with a Service Account
+    *   * Concepts
+    *     *     *     *     *     *     *     *     *     *     *     *     *     *     *   * Reference
+    *     *     *     *     *     * 
+
+Powered by GitBook
+Was this helpful?
+GitBook AssistantAsk
+  1. Deploying ZenML
+  2. 
+
+# with your User (interactive)
+Connect to the ZenML server using the ZenML CLI and the web based login.
+You can authenticate your clients with the ZenML Server using the ZenML CLI and the web‑based login (device flow). This method is ideal for humans working locally and applies to OSS servers and ZenML Pro workspaces.
+Copy```
+zenmlloginhttps://...
+```
+
+This command starts a browser flow to validate the device you are connecting from. You can choose whether to mark the device as trusted. If you don’t trust the device, a 24‑hour token is issued; if you do, a 30‑day token is issued.
+Managing authorized devices for ZenML Pro workspaces is not yet supported in the dashboard. CLI device management is available.
+To see all devices you've permitted, use the following command:
+Copy```
+zenmlauthorized-devicelist
+```
+
+Additionally, the following command allows you to more precisely inspect one of these devices:
+Copy```
+zenmlauthorized-devicedescribe<DEVICE_ID>
+```
+
+For increased security, you can invalidate a token using the `zenml authorized-device lock` command followed by the device ID.
+Copy```
+zenml authorized-device lock <DEVICE_ID>  
+```
+
+To keep things simple, we can summarize the steps:
+  1. Use the `zenml login <URL>` command to start a device flow and connect to a zenml server.
+  2. Choose whether to trust the device when prompted.
+  3. Check permitted devices with `zenml authorized-device list`.
+  4. Invalidate a token with `zenml authorized-device lock ...`.
+
+
+### 
+Important notice
+Using the ZenML CLI is a secure and comfortable way to interact with your ZenML servers. It's important to always ensure that only trusted devices are used to maintain security and privacy.
+Calling the ZenML Pro management API (`cloudapi.zenml.io`)? Interactive CLI login does not apply there. Use a ZenML Pro Personal Access Token or a ZenML Pro Service Account and API key instead. See ZenML Pro API Getting Started.
+Don't forget to manage your device trust levels regularly for optimal security. Should you feel a device trust needs to be revoked, lock the device immediately. Every token issued is a potential gateway to access your data, secrets and infrastructure.
+PreviousConnectNextwith your User (programmatic)
+Last updated 22 days ago
+Was this helpful?

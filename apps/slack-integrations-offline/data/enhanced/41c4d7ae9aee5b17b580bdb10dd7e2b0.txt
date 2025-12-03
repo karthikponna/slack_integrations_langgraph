@@ -1,0 +1,58 @@
+`⌘``k`
+GitBook Assistant
+ProductResourcesGitHubStart free
+More
+  * Documentation
+  * Learn
+  * ZenML Pro
+  * Stacks
+  * API Reference
+  * SDK Reference
+  * Changelog
+
+
+GitBook Assistant
+GitBook Assistant
+Working...Thinking...
+GitBook Assistant
+##### Good afternoon
+I'm here to help you with the docs.
+What is this page about?What should I read next?Can you give an example?
+`⌘``i`
+AI Based on your context
+Send
+  * Getting Started
+    *     *     *     *     *     *   * Deploying ZenML
+    *     *     *       * Best practices for upgrading
+      * Using ZenML server in production
+      * Troubleshoot your ZenML server
+      * Migration guide
+        * Migration guide 0.13.2 → 0.20.0
+        * Migration guide 0.23.0 → 0.30.0
+        * Migration guide 0.39.1 → 0.41.0
+        * Migration guide 0.58.2 → 0.60.0
+  * Concepts
+    *     *     *     *     *     *     *     *     *     *     *     *     *     *     *   * Reference
+    *     *     *     *     *     * 
+
+Powered by GitBook
+Was this helpful?
+GitBook AssistantAsk
+  1. Deploying ZenML
+  2.   3. Migration guide
+
+
+# Migration guide 0.23.0 → 0.30.0
+How to migrate from ZenML 0.20.0-0.23.0 to 0.30.0-0.39.1.
+Migrating to `0.30.0` performs non-reversible database changes so downgrading to `<=0.23.0` is not possible afterwards. If you are running on an older ZenML version, please follow the 0.20.0 Migration Guide first to prevent unexpected database migration failures.
+The ZenML 0.30.0 release removed the `ml-pipelines-sdk` dependency in favor of natively storing pipeline runs and artifacts in the ZenML database. The corresponding database migration will happen automatically as soon as you run any `zenml ...` CLI command after installing the new ZenML version, e.g.:
+Copy```
+pipinstallzenml==0.30.0
+zenmlversion# 0.30.0
+```
+
+PreviousMigration guide 0.13.2 → 0.20.0NextMigration guide 0.39.1 → 0.41.0
+Last updated 8 months ago
+Was this helpful?
+This site uses cookies to deliver its service and to analyze traffic. By browsing this site, you accept the privacy policy.
+AcceptReject

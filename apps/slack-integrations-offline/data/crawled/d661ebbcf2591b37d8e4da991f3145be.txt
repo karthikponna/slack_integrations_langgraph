@@ -1,0 +1,46 @@
+`⌘``k`
+GitBook Assistant
+ProductResourcesGitHubStart free
+More
+  * Documentation
+  * Learn
+  * ZenML Pro
+  * Stacks
+  * API Reference
+  * SDK Reference
+  * Changelog
+
+
+GitBook Assistant
+GitBook Assistant
+Working...Thinking...
+GitBook Assistant
+##### Good afternoon
+I'm here to help you with the docs.
+What is this page about?What should I read next?Can you give an example?
+`⌘``i`
+AI Based on your context
+Send
+  * Getting Started
+    *     *     *     *     *     *   * Deploying ZenML
+    *     *       * with your User (interactive)
+      * with your User (programmatic)
+      * with a Service Account
+    *   * Concepts
+    *     *     *     *     *     *     *     *     *     *     *     *     *     *     *   * Reference
+    *     *     *     *     *     * 
+
+Powered by GitBook
+Was this helpful?
+GitBook AssistantAsk
+  1. Deploying ZenML
+  2. 
+
+# with your User (programmatic)
+Connect to the ZenML server using a Personal Access Token.
+If you are using ZenML Pro and need to call the ZenML Pro workspace API from a non-interactive environment, you also have the option of creating and using a Personal Access Token. Personal Access Tokens are scoped to your ZenML Pro user account and can be used to access all workspaces you are a member of in any organization. See the ZenML Pro Personal Access Tokens documentation for more information.
+**Personal Access Tokens are only available in ZenML Pro**
+If you are using ZenML OSS and need to call the ZenML OSS API from a non-interactive environment, you can use a service account and an API key. See the Connect with a service account documentation for more information.
+Previouswith your User (interactive)Nextwith a Service Account
+Last updated 22 days ago
+Was this helpful?

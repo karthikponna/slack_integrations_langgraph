@@ -1,0 +1,114 @@
+`⌘``k`
+GitBook Assistant
+ProductResourcesGitHubStart free
+More
+  * Documentation
+  * Learn
+  * ZenML Pro
+  * Stacks
+  * API Reference
+  * SDK Reference
+  * Changelog
+
+
+GitBook Assistant
+GitBook Assistant
+Working...Thinking...
+GitBook Assistant
+##### Good afternoon
+I'm here to help you with the docs.
+What is this page about?What should I read next?Can you give an example?
+`⌘``i`
+AI Based on your context
+Send
+  * Getting Started
+    *     *     *     *     *     *   * Deploying ZenML
+    *     *     *   * Concepts
+    *     *     *     *     *     *     *     *     *     *     *     *     *     *     *   * Reference
+    *     *     *     *     *     * 
+
+Powered by GitBook
+  * Running with Docker
+  * Starting the local server
+
+
+Was this helpful?
+GitBook AssistantAsk
+  1. Getting Started
+
+
+Installing ZenML and getting started.
+1
+**Install ZenML**
+ZenML currently supports **Python 3.10, 3.11, 3.12, and 3.13**. Please make sure that you are using a supported Python version.
+Base package
+Local Dashboard
+Jupyter Notebooks
+**ZenML** is a Python package that can be installed using `pip` or other Python package managers:
+Copy```
+pipinstallzenml
+```
+
+Installing the base package only allows you to connect to a deployed ZenML server. If you want to use ZenML purely locally, install it with the `local` extra:
+Copy```
+pipinstall'zenml[local]'
+```
+
+If you want to use the ZenML dashboard locally, you need to install ZenML with the `server` extra:
+Copy```
+pipinstall'zenml[server]'
+```
+
+If you want to run a local server while running on a Mac with Apple Silicon (M1, M2, M3, M4), you should set the following environment variable:
+Copy```
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+```
+
+You can read more about this here.
+If you write your ZenML pipelines ins Jupyter notebooks, we recommend installing ZenML with the `jupyter` extra which includes improved CLI output and logs:
+Copy```
+pipinstall'zenml[jupyter]'
+```
+
+2
+**Verifying Installations**
+Once the installation is completed, you can check whether the installation was successful either through Bash or Python:
+Bash
+Python
+Copy```
+zenmlversion
+```
+
+Copy```
+import zenml
+print(zenml.__version__)
+```
+
+If you would like to learn more about the current release, please visit our PyPi package page.
+## 
+Running with Docker
+`zenml` is also available as a Docker image hosted publicly on DockerHub. Use the following command to get started in a bash environment with `zenml` available:
+Copy```
+dockerrun-itzenmldocker/zenml/bin/bash
+```
+
+If you would like to run the ZenML server with Docker:
+Copy```
+dockerrun-it-d-p8080:8080zenmldocker/zenml-server
+```
+
+## 
+Starting the local server
+By default, ZenML runs without a server connected to a local database on your machine. If you want to access the dashboard locally, you need to start a local server:
+Copy```
+# Make sure to have the `server` extra installed
+pipinstall"zenml[server]"
+zenmllogin--local# opens the dashboard locally 
+```
+
+However, advanced ZenML features are dependent on a centrally deployed ZenML server accessible to other MLOps stack components. You can read more about it here. For the deployment of ZenML, you have the option to either self-host it or register for a free ZenML Pro account.
+PreviousWelcome to ZenMLNextHello World
+Last updated 1 month ago
+Was this helpful?
+This site uses cookies to deliver its service and to analyze traffic. By browsing this site, you accept the privacy policy.
+AcceptReject

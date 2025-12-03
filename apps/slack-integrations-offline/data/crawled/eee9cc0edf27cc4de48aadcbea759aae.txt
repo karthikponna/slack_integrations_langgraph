@@ -1,0 +1,100 @@
+`Ctrl``k`
+GitBook AssistantAsk
+ProductResourcesGitHubStart free
+More
+  * Documentation
+  * Learn
+  * ZenML Pro
+  * Stacks
+  * API Reference
+  * SDK Reference
+  * Changelog
+
+
+GitBook Assistant
+GitBook Assistant
+Working...Thinking...
+GitBook Assistant
+##### Good afternoon
+I'm here to help you with the docs.
+What is this page about?What should I read next?Can you give an example?
+`Ctrl``i`
+AI Based on your context
+Send
+  * Getting Started
+    *     *     *     *     *     *   * Deploying ZenML
+    *     *     *       * Best practices for upgrading
+      * Using ZenML server in production
+      * Troubleshoot your ZenML server
+      * Migration guide
+  * Concepts
+    *     *     *     *     *     *     *     *     *     *     *     *     *     *     *   * Reference
+    *     *     *     *     *     * 
+
+Powered by GitBook
+Was this helpful?
+GitBook AssistantAsk
+  1. Deploying ZenML
+
+
+Learn how to upgrade your server to a new version of ZenML for the different deployment options.
+The way to upgrade your ZenML server depends a lot on how you deployed it. However, there are some best practices that apply in all cases. Before you upgrade, check out the best practices for upgrading ZenML guide.
+In general, upgrade your ZenML server as soon as you can once a new version is released. New versions come with a lot of improvements and fixes from which you can benefit.
+Docker
+Kubernetes with Helm
+To upgrade to a new version with docker, you have to delete the existing container and then run the new version of the `zenml-server` image.
+Check that your data is persisted (either on persistent storage or on an external MySQL instance) before doing this.
+Optionally also perform a backup before the upgrade.
+  * Delete the existing ZenML container, for example like this:
+Copy```
+# find your container ID
+dockerps
+```
+
+Copy```
+# stop the container
+dockerstop<CONTAINER_ID>
+# remove the container
+dockerrm<CONTAINER_ID>
+```
+
+  * Deploy the version of the `zenml-server` image that you want to use. Find all versions here.
+Copy```
+dockerrun-it-d-p8080:8080--name<CONTAINER_NAME>zenmldocker/zenml-server:<VERSION>
+```
+
+
+
+To upgrade your ZenML server Helm release to a new version, follow the steps below.
+**Simple in-place upgrade**
+If you don't need to change any configuration values, you can perform a simple in-place upgrade that reuses your existing configuration:
+Copy```
+helm-n<namespace>upgradezenml-serveroci://public.ecr.aws/zenml/zenml--version<VERSION>--reuse-values
+```
+
+**Upgrade with configuration changes**
+If you need to modify your ZenML server configuration during the upgrade, follow these steps instead:
+  * Extract your current configuration values to a file:
+Copy```
+helm-n<namespace>getvalueszenml-server>custom-values.yaml
+```
+
+  * Make the necessary changes to your `custom-values.yaml` file (make sure they are compatible with the new version)
+  * Upgrade the release using your modified values file:
+Copy```
+helm-n<namespace>upgradezenml-serveroci://public.ecr.aws/zenml/zenml--version<VERSION>-fcustom-values.yaml
+```
+
+
+
+It is not recommended to change the container image tag in the Helm chart to custom values, since every Helm chart version is tested to work only with the default image tag. However, if you know what you're doing you can change the `zenml.image.tag` value in your `custom-values.yaml` file to the desired ZenML version (e.g. `0.32.0`).
+## 
+Important Considerations After Upgrading
+  * **Downgrading is not supported** : Downgrading the server to an older version is not supported and can lead to unexpected behavior.
+  * **Client-server version alignment** : The version of the Python client that connects to the server should be kept at the same version as the server.
+  * **Recreate snapshots** : After upgrading your ZenML server, you need to recreate any snapshots that you were using. Snapshots are tied to specific server versions and will often not work correctly after an upgrade.
+
+
+Previouswith a Service AccountNextBest practices for upgrading
+Last updated 2 months ago
+Was this helpful?

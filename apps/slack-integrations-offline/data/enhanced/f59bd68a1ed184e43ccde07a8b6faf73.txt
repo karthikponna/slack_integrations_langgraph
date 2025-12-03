@@ -1,0 +1,42 @@
+`⌘``k`
+GitBook Assistant
+ProductResourcesGitHubStart free
+More
+  * Documentation
+  * Learn
+  * ZenML Pro
+  * Stacks
+  * API Reference
+  * SDK Reference
+  * Changelog
+
+
+GitBook Assistant
+GitBook Assistant
+Working...Thinking...
+GitBook Assistant
+##### Good afternoon
+I'm here to help you with the docs.
+What is this page about?What should I read next?Can you give an example?
+`⌘``i`
+AI Based on your context
+Send
+  * Getting Started
+    *     *     *     *     *     *   * Deploying ZenML
+    *     *     *   * Concepts
+    *     *     *     *     *     *     *     *     *     *     *     *     *     *     *   * Reference
+    *     *     *     *     *     * 
+
+Powered by GitBook
+Was this helpful?
+GitBook AssistantAsk
+  1. Concepts
+
+
+Create and run templates in ZenML to standardize execution.
+Run templates have been replaced by pipeline snapshots.
+PreviousDashboardNextCommunity & content
+Last updated 2 months ago
+Was this helpful?
+This site uses cookies to deliver its service and to analyze traffic. By browsing this site, you accept the privacy policy.
+AcceptReject

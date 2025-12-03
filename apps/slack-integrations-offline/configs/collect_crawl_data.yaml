@@ -1,0 +1,4 @@
+parameters:
+  url_prefix: https://docs.zenml.io
+  data_dir: data/
+  to_s3: true

@@ -1,0 +1,93 @@
+`⌘``k`
+GitBook Assistant
+ProductResourcesGitHubStart free
+More
+  * Documentation
+  * Learn
+  * ZenML Pro
+  * Stacks
+  * API Reference
+  * SDK Reference
+  * Changelog
+
+
+GitBook Assistant
+GitBook Assistant
+Working...Thinking...
+GitBook Assistant
+##### Good afternoon
+I'm here to help you with the docs.
+What is this page about?What should I read next?Can you give an example?
+`⌘``i`
+AI Based on your context
+Send
+  * Getting Started
+    *     *     *     *     *     *   * Deploying ZenML
+    *     *       * with your User (interactive)
+      * with your User (programmatic)
+      * with a Service Account
+    *   * Concepts
+    *     *     *     *     *     *     *     *     *     *     *     *     *     *     *   * Reference
+    *     *     *     *     *     * 
+
+Powered by GitBook
+  * Choose how to connect
+  * Common pitfalls
+
+
+Was this helpful?
+GitBook AssistantAsk
+  1. Deploying ZenML
+
+
+Various means of connecting to ZenML.
+Once ZenML is deployed, there are various ways to connect to it.
+## 
+Choose how to connect
+Use this quick guide to pick the right method based on your context:
+Context
+Use
+Credentials
+Docs
+You are a human using the CLI and browser
+Interactive login (device flow)
+Your user session (24h/30d)
+Connect with your user
+Script/notebook needs to make quick API calls to an OSS server
+Service account + API key
+Long‑lived API key
+Connect with a service account
+Script/notebook needs to make quick API calls to a ZenML Pro workspace
+ZenML Pro Personal Access Token
+Long‑lived PAT
+Connect with a personal access token
+CI/CD or long‑lived automation calling an OSS server
+Service account + API key
+Long‑lived API key
+Connect with a service account
+CI/CD or long‑lived automation calling a ZenML Pro workspace
+ZenML Pro API service account + API key
+Long‑lived API key
+Connect with a ZenML Pro service account
+CI/CD or long‑lived automation calling the ZenML Pro management API (`cloudapi.zenml.io`)
+ZenML Pro service account + API key
+Long-lived API key
+Connect with a ZenML Pro service account
+Which base URL should you call?
+  * Workspace/OSS API: your server or workspace URL (e.g., `https://<workspace-id>.zenml.io`).
+  * ZenML Pro management API: `https://cloudapi.zenml.io`.
+
+
+In ZenML Pro, use Personal Access Tokens or organization‑level service accounts and API keys (workspace‑level service accounts are deprecated). PATs and org‑level service accounts can be used for both the Workspace API and the Pro management API. See ZenML Pro Personal Access Tokens and ZenML Pro Organization Service Accounts.
+## 
+Common pitfalls
+  * 401 Unauthorized: verify you’re using the correct base URL, the token hasn’t expired, and the header is `Authorization: Bearer <token>`.
+  * Automation fails after 1 hour: check the expiration date of the PAT or API key and rotate it if it has expired.
+  * Can’t find Run Template endpoints: they exist on the Workspace/OSS API, not on `cloudapi.zenml.io`.
+
+
+PreviousCustom secret storesNextwith your User (interactive)
+Last updated 22 days ago
+Was this helpful?
+This site uses cookies to deliver its service and to analyze traffic. By browsing this site, you accept the privacy policy.
+AcceptReject

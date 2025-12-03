@@ -1,0 +1,141 @@
+`⌘``k`
+GitBook AssistantAsk
+ProductResourcesGitHubStart free
+More
+  * Documentation
+  * Learn
+  * ZenML Pro
+  * Stacks
+  * API Reference
+  * SDK Reference
+  * Changelog
+
+
+GitBook Assistant
+GitBook Assistant
+Working...Thinking...
+GitBook Assistant
+##### Good afternoon
+I'm here to help you with the docs.
+What is this page about?What should I read next?Can you give an example?
+`⌘``i`
+AI Based on your context
+Send
+  * Getting Started
+    *     *     *     *     *     *   * Deploying ZenML
+    *     *     *   * Concepts
+    *       * Configuration
+      * Scheduling
+      * Logging
+      * YAML Configuration
+      *       * Advanced Features
+      * Dynamic Pipelines (Experimental)
+    *     *     *     *     *     *     *     *     *     *     *     *     *     *   * Reference
+    *     *     *     *     *     * 
+
+Powered by GitBook
+  * Set a schedule
+  * Update/Pause/Stop a schedule
+
+
+Was this helpful?
+GitBook AssistantAsk
+  1. Concepts
+  2. 
+
+# Scheduling
+Learn how to set, pause and stop a schedule for pipelines.
+Schedules don't work for all orchestrators. Here is a list of all supported orchestrators.
+Orchestrator
+Scheduling Support
+Supported Schedule Types
+AirflowOrchestrator
+✅
+Cron, Interval
+AzureMLOrchestrator
+✅
+Cron, Interval
+DatabricksOrchestrator
+✅
+Cron only
+HyperAIOrchestrator
+✅
+Cron, One-time
+KubeflowOrchestrator
+✅
+Cron, Interval
+KubernetesOrchestrator
+✅
+Cron only
+LocalOrchestrator
+⛔️
+N/A
+LocalDockerOrchestrator
+⛔️
+N/A
+SagemakerOrchestrator
+✅
+Cron, Interval, One-time
+SkypilotAWSOrchestrator
+⛔️
+N/A
+SkypilotAzureOrchestrator
+⛔️
+N/A
+SkypilotGCPOrchestrator
+⛔️
+N/A
+SkypilotLambdaOrchestrator
+⛔️
+N/A
+TektonOrchestrator
+⛔️
+N/A
+VertexOrchestrator
+✅
+Cron only
+Check out our tutorial on scheduling for a practical guide on how to schedule a pipeline.
+### 
+Set a schedule
+Copy```
+from zenml.config.schedule import Schedule
+from zenml import pipeline
+from datetime import datetime
+@pipeline()
+defmy_pipeline(...):
+    ...
+# Use cron expressions
+schedule =Schedule(cron_expression="5 14 * * 3")
+# or alternatively use human-readable notations
+schedule =Schedule(start_time=datetime.now(), interval_second=1800)
+my_pipeline = my_pipeline.with_options(schedule=schedule)
+my_pipeline()
+```
+
+Check out our SDK docs to learn more about the different scheduling options.
+### 
+Update/Pause/Stop a schedule
+You can update or delete your schedules using the following CLI commands:
+Copy```
+# Update the cron expression of the schedule
+zenml pipeline schedule update <SCHEDULE_NAME_OR_ID> --cron-expression='* * * * *'
+# Delete a schedule
+zenml pipeline schedule delete <SCHEDULE_NAME_OR_ID>
+```
+
+The functionality of these commands changes depending on whether the orchestrator that is running the schedule supports schedule updates/deletions:
+  * If the orchestrator supports it, this will update/delete the actual schedule as well as the schedule information stored in ZenML
+  * If the orchestrator does not support it, this will only update/delete the schedule information stored in ZenML
+
+
+If the orchestrator **does not** support schedule management, maintaining the lifecycle of the schedule is the responsibility of the user. In these cases, we recommend the following steps:
+  1. Find schedule on ZenML
+  2. Match schedule on orchestrator side and delete
+  3. Delete schedule on ZenML
+  4. Re-run pipeline with new schedule
+
+
+A concrete example can be found on the GCP Vertex orchestrator docs, and this pattern can be adapted for other orchestrators as well.
+PreviousConfigurationNextLogging
+Last updated 4 months ago
+Was this helpful?

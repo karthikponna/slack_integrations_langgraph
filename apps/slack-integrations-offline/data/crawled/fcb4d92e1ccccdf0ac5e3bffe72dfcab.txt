@@ -1,0 +1,192 @@
+`⌘``k`
+GitBook Assistant
+ProductResourcesGitHubStart free
+More
+  * Documentation
+  * Learn
+  * ZenML Pro
+  * Stacks
+  * API Reference
+  * SDK Reference
+  * Changelog
+
+
+GitBook Assistant
+GitBook Assistant
+Working...Thinking...
+GitBook Assistant
+##### Good afternoon
+I'm here to help you with the docs.
+What is this page about?What should I read next?Can you give an example?
+`⌘``i`
+AI Based on your context
+Send
+  * Getting Started
+    *     *     *     *     *     *   * Deploying ZenML
+    *     *     *   * Concepts
+    *     *     *     *     *     *     *     *     *     *     *     *     *     *     *   * Reference
+    *     *     *     *     *     * 
+
+Powered by GitBook
+Was this helpful?
+GitBook AssistantAsk
+  1. Getting Started
+
+
+Your first ML pipeline with ZenML - from local development to cloud deployment in minutes.
+This guide will help you build and deploy your first ZenML pipeline, starting locally and then transitioning to the cloud without changing your code. The same principles you'll learn here apply whether you're building classical ML models or AI agents.
+1
+**Install ZenML**
+Start by installing ZenML in a fresh Python environment:
+Copy```
+pipinstall'zenml[server]'
+zenmllogin
+```
+
+This gives you access to both the ZenML Python SDK and CLI tools. It also surfaces the ZenML dashboard + connects it to your local client.
+2
+**Write your first pipeline**
+Create a simple `run.py` file with a basic workflow:
+Copy```
+from zenml import step, pipeline
+@step
+defbasic_step() ->str:
+"""A simple step that returns a greeting message."""
+return"Hello World!"
+@pipeline
+defbasic_pipeline() ->str:
+"""A simple pipeline with just one step."""
+    greeting =basic_step()
+return greeting
+if__name__=="__main__":
+basic_pipeline()
+```
+
+Run this pipeline in batch mode locally:
+Copy```
+pythonrun.py
+```
+
+You will see ZenML automatically tracks the execution and stores artifacts. View these on the CLI or on the dashboard.
+3
+**Create a Pipeline Snapshot (Optional but Recommended)**
+Before deploying, you can create a **snapshot** - an immutable, reproducible version of your pipeline including code, configuration, and container images:
+Copy```
+# Create a snapshot of your pipeline
+zenmlpipelinesnapshotcreaterun.basic_pipeline--namemy_snapshot
+```
+
+Snapshots are powerful because they:
+  * **Freeze your pipeline state** - Ensure the exact same pipeline always runs
+  * **Enable parameterization** - Run the same snapshot with different inputs
+  * **Support team collaboration** - Share ready-to-use pipeline configurations
+  * **Integrate with automation** - Trigger from dashboards, APIs, or CI/CD systems
+
+
+Learn more about Snapshots
+4
+**Deploy your pipeline as a real-time service**
+ZenML can deploy your pipeline (or snapshot) as a persistent HTTP service for real-time inference:
+Copy```
+# Deploy your pipeline directly
+zenmlpipelinedeployrun.basic_pipeline--namemy_deployment
+# OR deploy a snapshot (if you created one above)
+zenmlpipelinesnapshotdeploymy_snapshot--deploymentmy_deployment
+```
+
+Your pipeline now runs as a production-ready service! This is perfect for serving predictions to web apps, powering AI agents, or handling real-time requests.
+**Key insight** : When you deploy a pipeline directly with `zenml pipeline deploy`, ZenML automatically creates an implicit snapshot behind the scenes, ensuring reproducibility.
+Learn more about Pipeline Deployments
+5
+**Set up a ZenML Server (For Remote Infrastructure)**
+To use remote infrastructure (cloud deployers, orchestrators, artifact stores), you need to deploy a ZenML server to manage your pipelines centrally. You can use ZenML Pro (managed, 14-day free trial) or deploy it yourself (self-hosted, open-source).
+Connect your local environment:
+Copy```
+zenmllogin
+zenmlprojectset<PROJECT_NAME>
+```
+
+Once connected, you'll have a centralized dashboard to manage infrastructure, collaborate with team members, and schedule pipeline runs.
+6
+**Create your first remote stack (Optional)**
+A "stack" in ZenML represents the infrastructure where your pipelines run. You can now scale from local development to cloud infrastructure without changing any code.
+Stack deployment options
+Remote stacks can include:
+  * **Remote Deployers** (AWS App Runner, GCP Cloud Run, Azure Container Instances) - for deploying your pipelines as scalable HTTP services on the cloud
+  * **Remote Orchestrators** (Kubernetes, GCP Vertex AI, AWS SageMaker) - for running batch pipelines at scale
+  * **Remote Artifact Stores** (S3, GCS, Azure Blob) - for storing and versioning pipeline artifacts
+
+
+The fastest way to create a cloud stack is through the **Infrastructure-as-Code** option, which uses Terraform to deploy cloud resources and register them as a ZenML stack.
+You'll need:
+  * Terraform version 1.9+ installed locally
+  * Authentication configured for your preferred cloud provider (AWS, GCP, or Azure)
+  * Appropriate permissions to create resources in your cloud account
+
+
+Copy```
+# Create a remote stack using the deployment wizard
+zenmlstackregister<STACK_NAME> \
+--deployer<DEPLOYER_NAME> \
+--orchestrator<ORCHESTRATOR_NAME> \
+--artifact-store<ARTIFACT_STORE_NAME>
+```
+
+The wizard will guide you through each step.
+7
+**Deploy and run on remote infrastructure**
+Once you have a remote stack, you can:
+  1. **Deploy your service to the cloud** - Your deployment runs on managed cloud infrastructure:
+
+
+Copy```
+zenmlstackset<REMOTE_STACK_NAME>
+zenmlpipelinedeployrun.basic_pipeline--namemy_production_deployment
+```
+
+  1. **Run batch pipelines at scale** - Use the same code with a cloud orchestrator:
+
+
+Copy```
+zenmlstackset<REMOTE_STACK_NAME>
+pythonrun.py# Automatically runs on cloud infrastructure
+```
+
+ZenML handles packaging code, building containers, orchestrating execution, and tracking artifacts automatically across all cloud providers.
+Your pipeline in the ZenML Pro Dashboard
+8
+**What's next?**
+Congratulations! You've just experienced the core value proposition of ZenML:
+  * **Write Once, Run Anywhere** : The same code runs locally during development and in the cloud for production
+  * **Unified Framework** : Use the same MLOps principles for both classical ML models and AI agents
+  * **Separation of Concerns** : Infrastructure configuration and ML code are completely decoupled, enabling independent evolution of each
+  * **Full Tracking** : Every run, artifact, and model is automatically versioned and tracked - whether it's a scikit-learn model or a multi-agent system
+
+
+To continue your ZenML journey, explore these key topics:
+**For All AI Workloads:**
+  * **Pipeline Development** : Discover advanced features like scheduling and caching
+  * **Artifact Management** : Learn how ZenML stores, versions, and tracks your data automatically
+  * **Organization** : Use tags and metadata to keep your AI projects structured
+
+
+**For LLMs and AI Agents:**
+  * **LLMOps Guide** : Write your first AI pipeline for agent development patterns
+  * **Deploying Agents** : To see an example of a deployed document extraction agent, see the deploying agents example
+  * **Agent Outer Loop** : See the Agent Outer Loop example to learn about training classifiers and improving agents through feedback loops
+  * **Agent Evaluation** : Learn to systematically evaluate and compare different agent architectures
+  * **Prompt Management** : Version and track prompts, tools, and agent configurations as artifacts
+
+
+**Infrastructure & Deployment:**
+  * **Containerization** : Understand how ZenML handles containerization for reproducible execution
+  * **Stacks & Infrastructure**: Explore the concepts behind stacks and service connectors for authentication
+  * **Secrets Management** : Learn how to handle sensitive information securely
+  * **Snapshots** : Create reusable snapshots for standardized workflows
+
+
+PreviousInstallationNextYour First AI Pipeline
+Last updated 1 month ago
+Was this helpful?
+This site uses cookies to deliver its service and to analyze traffic. By browsing this site, you accept the privacy policy.
+AcceptReject

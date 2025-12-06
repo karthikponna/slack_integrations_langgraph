@@ -41,7 +41,7 @@ class Settings(BaseSettings):
         default="mongodb://slack:slack@localhost:27017/?directConnection=true", 
         description="Connection URI for the local MongoDB Atlas instance.",
     )
-
+    
 
     @field_validator("OPENAI_API_KEY")
     @classmethod

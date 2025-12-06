@@ -1,13 +1,13 @@
 import os
 
-from agents import function_tool
+from langchain.tools import tool
 
 from src.slack_integrations_online.application.rag.retrievers import get_retriever
 from src.slack_integrations_online.application.rag.single_document_retriever import get_single_document
 # from src.slack_integrations_online.utils import load_yaml_file
 
 
-@function_tool
+@tool
 def mongodb_retriever_tool(query: str) -> str:
 
     """Retrieve relevant documents from MongoDB based on a search query.
@@ -53,7 +53,7 @@ When using context from any document, also include the document URL as reference
 
 
 
-@function_tool
+@tool
 def get_complete_docs_with_url(url: str) -> str:
 
     """

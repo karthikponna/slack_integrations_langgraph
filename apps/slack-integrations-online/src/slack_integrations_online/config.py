@@ -1,3 +1,4 @@
+import os
 from loguru import logger
 from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -33,6 +34,20 @@ class Settings(BaseSettings):
         description="Connection URI for the local MongoDB Atlas instance.",
     )
 
+    # Langsmit Configuration
+    LANGCHAIN_TRACING_V2: str = Field(
+        default="true",
+        description="Enabling tracking for langsmith"
+    )
+
+    LANGCHAIN_API_KEY: str = Field(
+        description="Langsmith api key for traces"
+    )
+
+    LANGCHAIN_PROJECT: str = Field(
+        description="Project name"
+    )
+
 
     @field_validator("OPENAI_API_KEY")
     @classmethod
@@ -46,6 +61,11 @@ class Settings(BaseSettings):
 
 try:
     settings = Settings()
+    
+    # Export LangSmith environment variables for LangChain runtime
+    os.environ["LANGCHAIN_TRACING_V2"] = settings.LANGCHAIN_TRACING_V2
+    os.environ["LANGCHAIN_API_KEY"] = settings.LANGCHAIN_API_KEY
+    os.environ["LANGCHAIN_PROJECT"] = settings.LANGCHAIN_PROJECT
 
 except Exception as e:
     logger.error(f"Failed to load configuration: {e}")

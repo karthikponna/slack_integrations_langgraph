@@ -4,10 +4,8 @@ from openai import AsyncOpenAI
 from pydantic import BaseModel
 
 from mem0.configs.base import MemoryConfig, EmbedderConfig, VectorStoreConfig, LlmConfig
-from agents import (
-    RunContextWrapper,
-    function_tool,
-)
+from langchain.tools import tool
+from langchain_core.runnables import RunnableConfig
 
 from src.slack_integrations_online.config import settings
 
@@ -43,13 +41,9 @@ openai_client = AsyncOpenAI()
 memory = AsyncMemory(config=custom_config)
 
 
-class Mem0Context(BaseModel):
-    user_id: str | None = None
-
-
-@function_tool
+@tool
 async def search_memory(
-    context: RunContextWrapper[Mem0Context],
+    config: RunnableConfig,
     query: str
 ) -> str:
     """
@@ -58,7 +52,7 @@ async def search_memory(
         query: The search query.
     """
     
-    user_id = context.context.user_id or "default_user"
+    user_id = config.get("configurable", {}).get("user_id", "default_user")
     memories = await memory.search(query, user_id=user_id, limit=3)
 
     results = '\n'.join([result["memory"] for result in memories["results"]])
@@ -66,9 +60,9 @@ async def search_memory(
     return str(results)
 
 
-@function_tool
+@tool
 async def add_to_memory(
-    context: RunContextWrapper[Mem0Context],
+    config: RunnableConfig,
     content: str,
 ) -> str:
     """
@@ -77,6 +71,6 @@ async def add_to_memory(
         content: The content to store in memory.
     """
     messages = [{"role": "user", "content": content}]
-    user_id = context.context.user_id or "default_user"
+    user_id = config.get("configurable", {}).get("user_id", "default_user")
     await memory.add(messages, user_id=user_id)
     return f"Stored message: {content}"

@@ -2,16 +2,14 @@ import os
 import json
 import warnings
 
-from agents import (
-    Agent,
-    Runner,
-    FunctionTool,
-    gen_trace_id,
-    trace,
-)
 from loguru import logger
 
-from src.slack_integrations_online.application.agents.tools.memory_tools import add_to_memory, search_memory, Mem0Context
+from langgraph.graph import StateGraph, MessagesState, START, END
+from langgraph.prebuilt import ToolNode, tools_condition
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import HumanMessage, SystemMessage
+
+from src.slack_integrations_online.application.agents.tools.memory_tools import add_to_memory, search_memory
 from src.slack_integrations_online.application.agents.tools.monogdb_retriever_tools import mongodb_retriever_tool, get_complete_docs_with_url
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
@@ -42,20 +40,53 @@ Determine if the user is asking about their previous memories/conversations or a
 - Only use get_complete_docs_with_url when chunks are relevant to the query but lack sufficient detail or context
 """
 
-agent = Agent(
-    name = "Mongodb Agent",
-    instructions=INSTRUCTIONS,
-    tools = [search_memory, mongodb_retriever_tool, get_complete_docs_with_url, add_to_memory],
-    model = "o4-mini",
+model = ChatOpenAI(model="gpt-4o-mini")
+tools = [search_memory, mongodb_retriever_tool, get_complete_docs_with_url, add_to_memory]
 
-)
+
+def create_agent_graph():
+    """Create a LangGraph agent with tools using StateGraph."""
+    
+    # Bind tools to model
+    model_with_tools = model.bind_tools(tools)
+    
+    # Define the function that calls the model
+    def call_model(state: MessagesState):
+        messages = state["messages"]
+        
+        # Add system message if not present or if it's the first message
+        if not messages or not any(isinstance(msg, SystemMessage) for msg in messages):
+            messages = [SystemMessage(content=INSTRUCTIONS)] + messages
+        
+        response = model_with_tools.invoke(messages)
+        return {"messages": [response]}
+    
+    # Build the graph
+    workflow = StateGraph(MessagesState)
+    
+    # Add nodes
+    workflow.add_node("agent", call_model)
+    workflow.add_node("tools", ToolNode(tools))
+    
+    # Add edges
+    workflow.add_edge(START, "agent")
+    workflow.add_conditional_edges(
+        "agent",
+        tools_condition,
+    )
+    workflow.add_edge("tools", "agent")
+    
+    return workflow.compile()
+
+
+agent_graph = create_agent_graph()
 
 logger.info("Initializing agent with the following tools:")
-for tool in agent.tools:
-    if isinstance(tool, FunctionTool):
-        logger.info(f"Tool name: {tool.name}")
-        logger.info(f"Tool description: {tool.description}")
-        logger.info(f"Tool parameters: {json.dumps(tool.params_json_schema, indent=2)}")
+
+for tool in tools:
+    logger.info(f"Tool name: {tool.name}")
+    logger.info(f"Tool description: {tool.description}")
+    logger.info(f"Tool parameters: {json.dumps(tool.args, indent=2)}")
 
 
 class SupportAgentsManager():
@@ -65,22 +96,19 @@ class SupportAgentsManager():
         pass
 
     async def run(self, query:str, user_id: str = "default_user") -> None:
-        
-        trace_id = gen_trace_id()
 
         try:
+                
+            logger.info("Starting the agent run")
+            inputs = {"messages": [HumanMessage(content=f"User query: {query}")]}
+            config = {"configurable": {"user_id": user_id}}
 
-            with trace("Support Agents Trace", trace_id=trace_id):
+            result = await agent_graph.ainvoke(inputs, config=config)
 
-                logger.info("Starting the agent run")
-                logger.info(f"View trace: https://platform.openai.com/traces/trace?trace_id={trace_id}")
-                context = Mem0Context(user_id=user_id)
-                result = await Runner.run(agent, input=f"User query: {query}", context=context)
+            final_output = result["messages"][-1].content
+            logger.info(f"Agent response: {final_output}")
 
-                final_output = result.final_output
-                logger.info(f"Agent response: {final_output}")
-
-                return final_output
+            return final_output
 
         except Exception as e:
             logger.error(f"Error running agent: {str(e)}")

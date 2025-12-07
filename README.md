@@ -30,7 +30,7 @@ Find detailed setup instructions in each app's documentation:
 
 After completing the Offline and Online pipeline setups, you'll have access to your Agentic app in Slack, as seen in the video below:
 
-
+https://github.com/user-attachments/assets/c99461d6-54ca-4da7-95bc-4738bd1b5d31
 
 ## 💰 Cost Structure
 
